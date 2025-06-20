@@ -3,7 +3,7 @@
 2025-06-20 16:17:24,695 INFO:  * Detected change in 'C:\\Users\\leona\\OneDrive\\Documentos\\Meus_Repos\\organizador-de-arquivos\\app.py', reloading
 2025-06-20 16:17:25,309 WARNING:  * Debugger is active!
 2025-06-20 16:17:25,312 INFO:  * Debugger PIN: 787-848-661
-2025-06-20 16:17:36,272 INFO: Página principal acessada.
+2025-06-20 16:17:36,272 INFO: Pï¿½gina principal acessada.
 2025-06-20 16:17:36,375 INFO: 127.0.0.1 - - [20/Jun/2025 16:17:36] "GET / HTTP/1.1" 200 -
 2025-06-20 16:23:35,699 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
@@ -54,7 +54,7 @@
 2025-06-20 16:34:19,900 INFO:  * Detected change in 'C:\\Users\\leona\\OneDrive\\Documentos\\Meus_Repos\\arquivista-digital\\app.py', reloading
 2025-06-20 16:34:20,523 WARNING:  * Debugger is active!
 2025-06-20 16:34:20,528 INFO:  * Debugger PIN: 515-320-186
-2025-06-20 16:34:24,139 INFO: Página principal acessada.
+2025-06-20 16:34:24,139 INFO: Pï¿½gina principal acessada.
 2025-06-20 16:34:24,168 INFO: 127.0.0.1 - - [20/Jun/2025 16:34:24] "GET / HTTP/1.1" 200 -
 2025-06-20 16:34:55,049 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
