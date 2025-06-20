@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel - Arquivista Digital</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+    <style>
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .messages {
+        background-color: black;
+        padding: 15px;
+        border-radius: 5px;
+        border-left: 5px solid #007bff;
+      }
+      .category-title {
+        margin-top: 2rem;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 5px;
+      }
+      .file-list {
+        list-style-type: "📂";
+        padding-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="header">
+        <span>Olá, <strong>{{ current_user.username }}</strong>!</span>
+        <a href="{{ url_for('logout') }}">Sair</a>
+      </div>
+      <hr />
+
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+        <p><strong>-> {{ message }}</strong></p>
+        {% endfor %}
+      </div>
+      <hr />
+      {% endif %} {% endwith %}
+
+      <h1>Arquivista Digital Detalhista</h1>
+      <p>
+        Faça o upload de múltiplos arquivos e eles serão organizados
+        automaticamente.
+      </p>
+
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="arquivo">Selecione um ou mais arquivos:</label>
+        <input type="file" name="arquivo" id="arquivo" multiple />
+        <br /><br />
+        <button type="submit">Enviar e Organizar</button>
+      </form>
+
+      <hr />
+
+      <section>
+        <h2>Seus Arquivos Organizados</h2>
+        {% if arquivos_organizados %} {% for categoria, arquivos in
+        arquivos_organizados.items()|sort %}
+        <h3 class="category-title">{{ categoria|capitalize }}</h3>
+        <ul class="file-list">
+          {% for arquivo in arquivos %}
+          <li>{{ arquivo.nome }}</li>
+          {% endfor %}
+        </ul>
+        {% endfor %} {% else %}
+        <p>Nenhum arquivo foi organizado ainda. Comece a enviar!</p>
+        {% endif %}
+      </section>
+    </main>
+  </body>
+</html>

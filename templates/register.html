@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Registro - Arquivista Digital</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+  </head>
+  <body>
+    <main>
+      <h1>Criar Nova Conta</h1>
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %}
+      <form method="post">
+        <label for="username">Nome de Usuário</label>
+        <input type="text" name="username" id="username" required />
+        <label for="password">Senha</label>
+        <input type="password" name="password" id="password" required />
+        <button type="submit">Registrar</button>
+      </form>
+      <p>Já tem uma conta? <a href="{{ url_for('login') }}">Faça o login</a></p>
+    </main>
+  </body>
+</html>
