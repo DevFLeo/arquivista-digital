@@ -1,142 +1,153 @@
-# app.py
+# app.py - Versão Final com Sistema de Login Individual
 
 import os
-import logging
 from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
 
-# --- 1. Configuração Centralizada ---
-# Mover as configurações para uma classe é uma prática limpa e organizada.
-class Config:
-    UPLOAD_FOLDER = 'uploads'
-    MAX_FILES = 40
-    SECRET_KEY = 'uma-chave-super-secreta-para-seguranca'
-    LOG_FILE = 'arquivista.log'
-    EXTENSION_MAP = {
-        'png': 'imagens/png', 'jpg': 'imagens/jpg_jpeg', 'jpeg': 'imagens/jpg_jpeg',
-        'gif': 'imagens/gif', 'webp': 'imagens/webp', 'svg': 'imagens/vetoriais',
-        'docx': 'documentos/word', 'doc': 'documentos/word', 'xlsx': 'documentos/excel',
-        'xls': 'documentos/excel', 'pptx': 'documentos/powerpoint', 'ppt': 'documentos/powerpoint',
-        'pdf': 'documentos/pdf', 'txt': 'documentos/texto', 'mp3': 'multimedia/audio',
-        'wav': 'multimedia/audio', 'mp4': 'multimedia/video', 'zip': 'compactados', 'rar': 'compactados'
-    }
-    ALLOWED_EXTENSIONS = set(EXTENSION_MAP.keys())
+# --- Configurações Principais ---
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
+SECRET_KEY = 'uma-chave-super-secreta-e-longa-para-seguranca'
+EXTENSION_MAP = {
+    'png': 'imagens/png', 'jpg': 'imagens/jpg_jpeg', 'jpeg': 'imagens/jpg_jpeg',
+    'gif': 'imagens/gif', 'webp': 'imagens/webp', 'svg': 'imagens/vetoriais',
+    'docx': 'documentos/word', 'doc': 'documentos/word', 'xlsx': 'documentos/excel',
+    'xls': 'documentos/excel', 'pptx': 'documentos/powerpoint', 'ppt': 'documentos/powerpoint',
+    'pdf': 'documentos/pdf', 'txt': 'documentos/texto', 'mp3': 'multimedia/audio',
+    'wav': 'multimedia/audio', 'mp4': 'multimedia/video', 'zip': 'compactados', 'rar': 'compactados'
+}
+ALLOWED_EXTENSIONS = set(EXTENSION_MAP.keys())
 
-# --- 2. Inicialização e Configuração da Aplicação ---
+# --- Inicialização da Aplicação ---
 app = Flask(__name__)
-app.config.from_object(Config)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['SECRET_KEY'] = SECRET_KEY
+# --- 2. NOVA CONFIGURAÇÃO DO BANCO DE DADOS ---
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR, 'arquivista.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# --- 3. Configuração do Logging ---
-# Configura um sistema de log para registrar atividades e erros em um arquivo.
-logging.basicConfig(
-    filename=app.config['LOG_FILE'],
-    level=logging.INFO,
-    format='%(asctime)s %(levelname)s: %(message)s'
-)
+# --- 3. INICIALIZAÇÃO DOS SISTEMAS DE BD E LOGIN ---
+db = SQLAlchemy(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login' # Se um usuário não logado tentar acessar uma página protegida, ele será redirecionado para a rota 'login'.
 
-# --- 4. Funções Auxiliares ---
+# --- 4. MODELO DE USUÁRIO E CARREGADOR DE SESSÃO ---
+# A classe User agora herda de UserMixin, que já traz funcionalidades prontas para o login_manager.
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    password_hash = db.Column(db.String(200), nullable=False)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+# Esta função é exigida pelo Flask-Login para saber como encontrar um usuário a partir do ID guardado na sessão.
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# --- Funções Auxiliares (Modificadas para funcionar por usuário) ---
 def allowed_file(filename):
-    """Verifica se a extensão de um arquivo é permitida."""
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-def scan_organized_files():
-    """Escaneia a pasta de uploads e retorna um dicionário de arquivos organizados."""
+def get_user_upload_folder(user_id):
+    """Retorna o caminho da pasta de uploads de um usuário específico."""
+    return os.path.join(app.config['UPLOAD_FOLDER'], str(user_id))
+
+def scan_organized_files(user_id):
+    """Escaneia os arquivos de um usuário específico."""
     organized_files = {}
-    upload_folder = app.config['UPLOAD_FOLDER']
+    user_folder = get_user_upload_folder(user_id)
     
-    # os.walk percorre recursivamente todas as pastas e arquivos
-    for root, dirs, files in os.walk(upload_folder):
-        if not files:
-            continue
-        # Pega o nome da categoria (ex: 'imagens/png') a partir do caminho completo
-        category_path = os.path.relpath(root, upload_folder)
-        category_name = category_path.replace(os.path.sep, ' / ')
+    if not os.path.isdir(user_folder):
+        return {}
+
+    for root, dirs, files in os.walk(user_folder):
+        if not files: continue
         
-        organized_files[category_name] = []
-        for filename in files:
-            organized_files[category_name].append({
-                'nome': filename,
-                'caminho': os.path.join(category_path, filename) # Caminho relativo para a função de delete
-            })
+        category_path = os.path.relpath(root, user_folder)
+        if category_path == '.': continue
+
+        category_name = category_path.replace(os.path.sep, ' / ')
+        organized_files[category_name] = [{'nome': f, 'caminho': os.path.join(category_path, f)} for f in files]
+        
     return organized_files
 
-# --- 5. Rotas da Aplicação ---
+# --- 5. NOVAS ROTAS DE AUTENTICAÇÃO ---
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user = User.query.filter_by(username=username).first()
+        if user and user.check_password(password):
+            login_user(user)
+            return redirect(url_for('index'))
+        else:
+            flash('Usuário ou senha inválidos.')
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            flash('Este nome de usuário já existe.')
+        else:
+            new_user = User(username=username)
+            new_user.set_password(password)
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Conta criada com sucesso! Por favor, faça o login.')
+            return redirect(url_for('login'))
+    return render_template('register.html')
+
+@app.route('/logout')
+@login_required # Só quem está logado pode deslogar
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
+
+# --- 6. ROTAS PRINCIPAIS (AGORA PROTEGIDAS) ---
 @app.route('/')
+@login_required # Protege a página principal
 def index():
-    """Rota principal que exibe o formulário e a lista de arquivos."""
-    app.logger.info("Página principal acessada.")
-    organized_files = scan_organized_files()
-    return render_template('index.html', arquivos_organizados=organized_files)
+    arquivos = scan_organized_files(current_user.id)
+    return render_template('index.html', arquivos_organizados=arquivos)
 
 @app.route('/upload', methods=['POST'])
+@login_required # Protege a rota de upload
 def upload_file():
-    """Rota para lidar com o upload e organização dos arquivos."""
-    uploaded_files = request.files.getlist("arquivo")
-    
-    if len(uploaded_files) > app.config['MAX_FILES']:
-        flash(f'Erro: Limite de {app.config["MAX_FILES"]} arquivos por vez excedido.')
-        app.logger.warning(f'Tentativa de upload de {len(uploaded_files)} arquivos (limite: {app.config["MAX_FILES"]}).')
-        return redirect(url_for('index'))
-
-    if not uploaded_files or uploaded_files[0].filename == '':
-        flash('Nenhum arquivo selecionado!')
-        return redirect(url_for('index'))
-
+    files = request.files.getlist('arquivo')
+    user_folder = get_user_upload_folder(current_user.id)
+    # ... (a lógica de upload agora precisa salvar em user_folder) ...
     successful_uploads = 0
-    for file in uploaded_files:
-        if file and allowed_file(file.filename):
+    for file in files:
+        if file.filename != '' and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file_ext = filename.rsplit('.', 1)[1].lower()
-            
-            destination_subfolder = app.config['EXTENSION_MAP'].get(file_ext, 'outros')
-            destination_path = os.path.join(app.config['UPLOAD_FOLDER'], destination_subfolder)
-            
+            destination_subfolder = EXTENSION_MAP.get(file_ext, 'outros')
+            destination_path = os.path.join(user_folder, destination_subfolder)
             os.makedirs(destination_path, exist_ok=True)
-            
-            final_path = os.path.join(destination_path, filename)
-            file.save(final_path)
-            
-            app.logger.info(f'Arquivo "{filename}" salvo em "{destination_path}".')
+            file.save(os.path.join(destination_path, filename))
             successful_uploads += 1
         else:
-            if file.filename:
-                flash(f'Arquivo "{file.filename}" ignorado (tipo não permitido).')
-                app.logger.warning(f'Tentativa de upload de arquivo não permitido: {file.filename}')
-
-    if successful_uploads > 0:
-        flash(f'{successful_uploads} arquivo(s) foram organizados com sucesso!')
+            if file.filename: flash(f'Arquivo "{file.filename}" ignorado (tipo não permitido).')
     
+    if successful_uploads > 0: flash(f'{successful_uploads} arquivo(s) organizados com sucesso!')
+    else: flash('Nenhum arquivo válido foi enviado.')
     return redirect(url_for('index'))
 
-@app.route('/delete/<path:filepath>', methods=['POST'])
-def delete_file(filepath):
-    """Rota para deletar um arquivo específico."""
-    # Medida de segurança: constrói o caminho absoluto e verifica se ele realmente está dentro da pasta de uploads
-    # Isso previne ataques de "Directory Traversal".
-    upload_folder_abs = os.path.abspath(app.config['UPLOAD_FOLDER'])
-    file_to_delete_abs = os.path.abspath(os.path.join(upload_folder_abs, filepath))
-
-    if os.path.commonpath([file_to_delete_abs, upload_folder_abs]) != upload_folder_abs:
-        flash("Erro: Tentativa de acesso a um caminho inválido.")
-        app.logger.error(f'Tentativa de deleção de arquivo fora do diretório de uploads: {filepath}')
-        return redirect(url_for('index'))
-
-    try:
-        os.remove(file_to_delete_abs)
-        flash(f'Arquivo "{os.path.basename(filepath)}" deletado com sucesso.')
-        app.logger.info(f'Arquivo deletado: {file_to_delete_abs}')
-    except FileNotFoundError:
-        flash("Erro: Arquivo não encontrado para deleção.")
-        app.logger.error(f'Tentativa de deletar arquivo não existente: {file_to_delete_abs}')
-    except Exception as e:
-        flash(f"Ocorreu um erro ao deletar o arquivo: {e}")
-        app.logger.error(f"Erro ao deletar {file_to_delete_abs}: {e}")
-        
-    return redirect(url_for('index'))
-
-
+# --- Bloco de Execução Principal ---
 if __name__ == '__main__':
-    app.run(debug=True)
-
-    
-
+    with app.app_context():
+        db.create_all() # Cria as tabelas do banco de dados se não existirem
+    app.run(host='127.0.0.1', port=5000, debug=True)

@@ -1,0 +1,116 @@
+2025-06-20 16:17:12,229 WARNING:  * Debugger is active!
+2025-06-20 16:17:12,232 INFO:  * Debugger PIN: 787-848-661
+2025-06-20 16:17:24,695 INFO:  * Detected change in 'C:\\Users\\leona\\OneDrive\\Documentos\\Meus_Repos\\organizador-de-arquivos\\app.py', reloading
+2025-06-20 16:17:25,309 WARNING:  * Debugger is active!
+2025-06-20 16:17:25,312 INFO:  * Debugger PIN: 787-848-661
+2025-06-20 16:17:36,272 INFO: Página principal acessada.
+2025-06-20 16:17:36,375 INFO: 127.0.0.1 - - [20/Jun/2025 16:17:36] "GET / HTTP/1.1" 200 -
+2025-06-20 16:23:35,699 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:23:35,699 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:23:35,701 INFO:  * Restarting with stat
+2025-06-20 16:23:36,054 WARNING:  * Debugger is active!
+2025-06-20 16:23:36,058 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:24:58,175 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:24:58,175 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:24:58,177 INFO:  * Restarting with stat
+2025-06-20 16:24:58,544 WARNING:  * Debugger is active!
+2025-06-20 16:24:58,547 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:27:20,877 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:27:20,878 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:27:20,880 INFO:  * Restarting with stat
+2025-06-20 16:27:21,207 WARNING:  * Debugger is active!
+2025-06-20 16:27:21,209 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:29:50,135 INFO:  * Detected change in 'C:\\Users\\leona\\OneDrive\\Documentos\\Meus_Repos\\arquivista-digital\\app.py', reloading
+2025-06-20 16:29:50,239 INFO:  * Restarting with stat
+2025-06-20 16:30:40,985 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:30:40,985 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:30:40,986 INFO:  * Restarting with stat
+2025-06-20 16:30:41,315 WARNING:  * Debugger is active!
+2025-06-20 16:30:41,318 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:30:56,001 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:30:56,001 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:30:56,003 INFO:  * Restarting with stat
+2025-06-20 16:30:56,415 WARNING:  * Debugger is active!
+2025-06-20 16:30:56,417 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:32:06,984 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:32:06,985 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:32:06,988 INFO:  * Restarting with stat
+2025-06-20 16:32:07,377 WARNING:  * Debugger is active!
+2025-06-20 16:32:07,380 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:32:41,606 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:32:41,606 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:32:41,608 INFO:  * Restarting with stat
+2025-06-20 16:32:41,976 WARNING:  * Debugger is active!
+2025-06-20 16:32:41,980 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:34:18,804 WARNING:  * Debugger is active!
+2025-06-20 16:34:18,807 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:34:19,900 INFO:  * Detected change in 'C:\\Users\\leona\\OneDrive\\Documentos\\Meus_Repos\\arquivista-digital\\app.py', reloading
+2025-06-20 16:34:20,523 WARNING:  * Debugger is active!
+2025-06-20 16:34:20,528 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:34:24,139 INFO: Página principal acessada.
+2025-06-20 16:34:24,168 INFO: 127.0.0.1 - - [20/Jun/2025 16:34:24] "GET / HTTP/1.1" 200 -
+2025-06-20 16:34:55,049 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:34:55,050 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:34:55,051 INFO:  * Restarting with stat
+2025-06-20 16:34:55,430 WARNING:  * Debugger is active!
+2025-06-20 16:34:55,434 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:35:02,450 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:35:02,450 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:35:02,452 INFO:  * Restarting with stat
+2025-06-20 16:35:02,830 WARNING:  * Debugger is active!
+2025-06-20 16:35:02,833 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:36:40,114 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:36:40,115 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:36:40,117 INFO:  * Restarting with stat
+2025-06-20 16:36:40,481 WARNING:  * Debugger is active!
+2025-06-20 16:36:40,484 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:37:12,328 INFO:  * Detected change in 'C:\\Users\\leona\\OneDrive\\Documentos\\Meus_Repos\\arquivista-digital\\app.py', reloading
+2025-06-20 16:37:12,411 INFO:  * Restarting with stat
+2025-06-20 16:37:12,999 WARNING:  * Debugger is active!
+2025-06-20 16:37:13,005 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:37:18,413 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:37:18,414 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:37:18,415 INFO:  * Restarting with stat
+2025-06-20 16:37:18,774 WARNING:  * Debugger is active!
+2025-06-20 16:37:18,777 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:37:25,857 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:37:25,857 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:37:25,859 INFO:  * Restarting with stat
+2025-06-20 16:37:26,254 WARNING:  * Debugger is active!
+2025-06-20 16:37:26,257 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:38:23,889 INFO:  * Detected change in 'C:\\Users\\leona\\OneDrive\\Documentos\\Meus_Repos\\arquivista-digital\\app.py', reloading
+2025-06-20 16:38:23,990 INFO:  * Restarting with stat
+2025-06-20 16:39:12,853 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:39:12,854 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:39:12,855 INFO:  * Restarting with stat
+2025-06-20 16:39:13,191 WARNING:  * Debugger is active!
+2025-06-20 16:39:13,193 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:41:06,779 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:41:06,779 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:41:06,782 INFO:  * Restarting with stat
+2025-06-20 16:41:07,122 WARNING:  * Debugger is active!
+2025-06-20 16:41:07,124 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:41:43,019 INFO:  * Detected change in 'C:\\Users\\leona\\OneDrive\\Documentos\\Meus_Repos\\arquivista-digital\\app.py', reloading
+2025-06-20 16:41:43,093 INFO:  * Restarting with stat
+2025-06-20 16:41:43,545 WARNING:  * Debugger is active!
+2025-06-20 16:41:43,550 INFO:  * Debugger PIN: 515-320-186
+2025-06-20 16:41:48,290 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-20 16:41:48,290 INFO: [33mPress CTRL+C to quit[0m
+2025-06-20 16:41:48,292 INFO:  * Restarting with stat
+2025-06-20 16:41:48,627 WARNING:  * Debugger is active!
+2025-06-20 16:41:48,630 INFO:  * Debugger PIN: 515-320-186
